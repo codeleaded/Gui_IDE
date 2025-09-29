@@ -14,7 +14,7 @@
 			"SizeX" = "32"
 			"SizeY" = "64"
 			"NewSizeX" = "16"
-			"NewSizeY" = "16"
+			"NewSizeY" = "32"
 		}
 	}
 	"Windows" = {
