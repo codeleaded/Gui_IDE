@@ -281,7 +281,7 @@ void Explorer_RenderFile(unsigned int* Target,int Target_Width,int Target_Height
         //CStr_RenderSizeFont(Target,Target_Width,Target_Height,&e->font,(unsigned char*)s->str.Memory,s->str.size,*x,*y,WHITE);
     }
 
-    (*y)+=e->font.CharSizeX;
+    (*y) += e->font.CharSizeY;
     for(int i = 0;i<b->Childs.size;i++){
         (*x) += e->font.CharSizeX;
         Explorer_RenderFile(Target,Target_Width,Target_Height,e,*(Branch**)Vector_Get(&b->Childs,i),x,y);
@@ -387,7 +387,6 @@ void Setup(AlxWindow* w){
 
     Setup_ByInit(&displays);
 }
-
 void Update(AlxWindow* w){
     Explorer_Update(&explorer,window.Strokes,GetMouse());
     
@@ -405,7 +404,6 @@ void Update(AlxWindow* w){
         EDisplay_Render(WINDOW_STD_ARGS,d);
     }
 }
-
 void Delete(AlxWindow* w){
     Vector_Free(&displays);
 }
