@@ -377,7 +377,7 @@ void Setup_ByInit(Vector* EDisplays){
 }
 
 void Setup(AlxWindow* w){
-    explorer = Explorer_New(0.0f,0.0f,200.0f,1200.0f,AlxFont_PATHS_YANIS,16,16,SYNTAX_PATH,BLACK,".");
+    explorer = Explorer_New(0.0f,0.0f,200.0f,1200.0f,ALXFONT_PATHS_YANIS,16,16,SYNTAX_PATH,BLACK,".");
     displays = Vector_New(sizeof(EDisplay));
 
     //Vector_Push(&displays,(EDisplay[]){ EDisplay_New(200.0f,  0.0f, 1100.0f, 625.0f,INPUT_MAXLENGTH,16,SYNTAX_C,"./Saved.c") });
