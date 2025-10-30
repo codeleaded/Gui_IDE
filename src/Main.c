@@ -8,6 +8,7 @@
 
 #define SYNTAX_PATH     "/home/codeleaded/System/SyntaxFiles/Path_Syntax.alxon"
 #define SYNTAX_C        "/home/codeleaded/System/SyntaxFiles/C_Syntax.alxon"
+#define SYNTAX_OMML     "/home/codeleaded/System/SyntaxFiles/OMML_Syntax.alxon"
 
 #define EDISPLAY_SIDE_NONE          0
 #define EDISPLAY_SIDE_NORTH         1
@@ -377,7 +378,7 @@ void Setup_ByInit(Vector* EDisplays){
 }
 
 void Setup(AlxWindow* w){
-    explorer = Explorer_New(0.0f,0.0f,200.0f,1200.0f,ALXFONT_PATHS_YANIS,16,16,SYNTAX_PATH,BLACK,".");
+    explorer = Explorer_New(0.0f,0.0f,200.0f,1200.0f,ALXFONT_PATHS_YANIS,16,16,SYNTAX_PATH,BLACK,"./src");
     displays = Vector_New(sizeof(EDisplay));
 
     //Vector_Push(&displays,(EDisplay[]){ EDisplay_New(200.0f,  0.0f, 1100.0f, 625.0f,INPUT_MAXLENGTH,16,SYNTAX_C,"./Saved.c") });

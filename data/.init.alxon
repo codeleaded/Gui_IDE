@@ -1,12 +1,12 @@
 {
 	"Version" = "0"
 	"Explorer" = {
-		"Path" = "/home/codeleaded/Hecke/C/Win_IDE/Files/Main.c"
-		"Syntax" = "/home/codeleaded/System/SyntaxFiles/C_Syntax.alxon"
+		"Path" = "/home/codeleaded/Hecke/C/Win_IDE/Files/File.txt"
+		"Syntax" = "/home/codeleaded/System/SyntaxFiles/Path_Syntax.alxon"
 		"X" = "0"
 		"Y" = "0"
-		"W" = "400"
-		"H" = "1000"
+		"W" = "500"
+		"H" = "1300"
 		"Font" = {
 			"Path" = "/home/codeleaded/System/Fonts/Alx_Font_High.png"
 			"Columns" = "16"
@@ -19,12 +19,12 @@
 	}
 	"Windows" = {
 		{
-			"Path" = "/home/codeleaded/Hecke/C/Win_IDE/Files/Main.c"
-			"Syntax" = "/home/codeleaded/System/SyntaxFiles/C_Syntax.alxon"
-			"X" = "400"
+			"Path" = "/home/codeleaded/Hecke/C/Win_IDE/Files/Main.omml"
+			"Syntax" = "/home/codeleaded/System/SyntaxFiles/OMML_Syntax.alxon"
+			"X" = "500"
 			"Y" = "0"
-			"W" = "400"
-			"H" = "1000"
+			"W" = "1500"
+			"H" = "1300"
 			"Font" = {
 				"Path" = "/home/codeleaded/System/Fonts/Alx_Font_High.png"
 				"Columns" = "16"
@@ -38,10 +38,10 @@
 		{
 			"Path" = "/home/codeleaded/Hecke/C/Win_IDE/Files/File.txt"
 			"Syntax" = "/home/codeleaded/System/SyntaxFiles/Path_Syntax.alxon"
-			"X" = "800"
+			"X" = "2000"
 			"Y" = "0"
 			"W" = "400"
-			"H" = "1000"
+			"H" = "1300"
 			"Font" = {
 				"Path" = "/home/codeleaded/System/Fonts/Alx_Font_Blocky.png"
 				"Columns" = "16"

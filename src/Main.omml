@@ -1,0 +1,25 @@
+size(30) col(0xFFFF0000) ul("Daten auf PC sichern") ln
+
+size(20) col(0xFF00AA00) ln ul("Option A: Direkter Zugriff (USB-Debugging)")
+ln col(0xFF000000) size(16)
+dot "Geraet per USB an den PC anschliessen" ln
+dot "Auf dem Telefon Dateiuebertragung / MTP auswaehlen" ln
+dot "Dateien vom internen Speicher auf den PC kopieren" ln
+
+size(20) col(0xFF0000AA) ln ul("Option B: Backup ueber Mi Cloud")
+ln col(0xFF000000) size(16)
+dot "Einstellungen -> Mi-Konto -> Cloud-Backup" ln
+dot "Backup erstellen -> auf PC oder neues Xiaomi-Geraet wiederherstellen" ln
+
+size(20) col(0xFFAAAA00) ln ul("Option C: ADB Backup")
+ln col(0xFF000000) size(16)
+dot "USB-Debugging aktivieren" ln ln
+
+"Mit Ubuntu:" ln
+" adb devices  # Geraet erkennen" ln
+" adb backup -all -f ~/backup.ab" ln ln
+
+dot "Das erstellt ein komplettes Backup" ln
+dot "Einige Apps (wie Banking-Apps)" ln
+" erlauben wegen Sicherheitsrichtlinien" ln
+" kein Backup ueber ADB" ln
