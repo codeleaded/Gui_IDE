@@ -113,6 +113,13 @@ void EDisplay_Free(EDisplay* d){
 }
 
 
+
+typedef struct Folder {
+    String name;
+    unsigned int color;
+    unsigned char folded;
+} Folder;
+
 void list_files(Branch* Parent,const char *path) {
     struct dirent *entry;
     DIR *dp = opendir(path);
@@ -130,7 +137,7 @@ void list_files(Branch* Parent,const char *path) {
         snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
 
         char* Clipped = CStr_ChopEndFrom(full_path,'/');
-        Branch* b = Branch_New((String[]){ String_Make(Clipped) },sizeof(String));
+        Branch* b = Branch_New((Folder[]){ { .name = String_Make(Clipped),.color = WHITE,.folded = 1 } },sizeof(Folder));
         free(Clipped);
 
         struct stat statbuf;
@@ -150,6 +157,7 @@ void list_files(Branch* Parent,const char *path) {
 
     closedir(dp);
 }
+
 
 typedef struct Explorer {
     Tree fsystem;
@@ -171,7 +179,6 @@ typedef struct Explorer {
 
 void Explorer_Reload(Explorer* e){
     char* cstr = String_CStr(&e->ParentDir);
-    
     list_files(e->fsystem.Root,cstr);
     free(cstr);
 }
@@ -200,9 +207,32 @@ Explorer Explorer_New(float x,float y,float w,float h,char *Path, int Columns, i
     return d;
 }
 
+void Explorer_SetFold(Explorer* e,Branch* b,int* x,int* y,int px,int py){
+    Folder* s = b->Memory;
+    
+    (*y) += e->font.CharSizeY;
+    if(s){
+        if(py >= *y - e->font.CharSizeY && py < (*y)){
+            s->folded = !s->folded;
+            return;
+        }
+    }
+
+    (*x) += e->font.CharSizeX;
+    if(!s || (s && s->folded==0)){
+        for(int i = 0;i<b->Childs.size;i++){
+            Explorer_SetFold(e,*(Branch**)Vector_Get(&b->Childs,i),x,y,px,py);
+        }
+    }
+    (*x) -= e->font.CharSizeX;
+}
 void Explorer_Update(Explorer* e,States* strokes,Vec2 Mouse){
     if(e->Enabled){
         if(strokes[ALX_MOUSE_L].PRESSED){
+            if(Mouse.x >= e->r.p.x && Mouse.x < e->r.p.x + e->r.d.x){
+                Explorer_SetFold(e,e->fsystem.Root,(int[]){ 0 },(int[]){ 0 },Mouse.x,Mouse.y);
+            }
+
             float we = F32_Abs(Mouse.x - e->r.p.x);
             float ea = F32_Abs(Mouse.x - (e->r.p.x + e->r.d.x));
             float no = F32_Abs(Mouse.y - e->r.p.y);
@@ -273,21 +303,25 @@ void Explorer_Update(Explorer* e,States* strokes,Vec2 Mouse){
     //}
 }
 void Explorer_RenderFile(unsigned int* Target,int Target_Width,int Target_Height,Explorer* e,Branch* b,int* x,int* y){
-    String* s = b->Memory;
+    //if(*y > Target_Height) return;
+    
+    Folder* s = b->Memory;
     if(s){
-        Tex_SyncString(&e->t,s);
-        Tex_HighLightString(&e->t,s,&e->Syntax);
-        TCStr_RenderSizeAlxFont(Target,Target_Width,Target_Height,&e->font,Vector_Get(&e->t,0),(char*)(s->Memory + 0),s->size,*x,*y);
+        Tex_SyncString(&e->t,&s->name);
+        Tex_HighLightString(&e->t,&s->name,&e->Syntax);
+        TCStr_RenderSizeAlxFont(Target,Target_Width,Target_Height,&e->font,Vector_Get(&e->t,0),s->name.Memory,s->name.size,*x,*y);
 
         //CStr_RenderSizeFont(Target,Target_Width,Target_Height,&e->font,(unsigned char*)s->str.Memory,s->str.size,*x,*y,WHITE);
     }
 
     (*y) += e->font.CharSizeY;
-    for(int i = 0;i<b->Childs.size;i++){
-        (*x) += e->font.CharSizeX;
-        Explorer_RenderFile(Target,Target_Width,Target_Height,e,*(Branch**)Vector_Get(&b->Childs,i),x,y);
-        (*x) -= e->font.CharSizeX;
+    (*x) += e->font.CharSizeX;
+    if(!s || (s && s->folded==0)){
+        for(int i = 0;i<b->Childs.size;i++){
+            Explorer_RenderFile(Target,Target_Width,Target_Height,e,*(Branch**)Vector_Get(&b->Childs,i),x,y);
+        }
     }
+    (*x) -= e->font.CharSizeX;
 }
 void Explorer_Render(unsigned int* Target,int Target_Width,int Target_Height,Explorer* e){
     Rect_Render(Target,Target_Width,Target_Height,e->r,e->Bg);
