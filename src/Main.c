@@ -307,6 +307,10 @@ void Explorer_RenderFile(unsigned int* Target,int Target_Width,int Target_Height
     
     Folder* s = b->Memory;
     if(s){
+        if(b->Childs.size > 0){
+            Rect_RenderXXWire(Target,Target_Width,Target_Height,*x,*y,s->name.size * e->font.CharSizeX,e->font.CharSizeY,WHITE,1.0f);
+        }
+        
         Tex_SyncString(&e->t,&s->name);
         Tex_HighLightString(&e->t,&s->name,&e->Syntax);
         TCStr_RenderSizeAlxFont(Target,Target_Width,Target_Height,&e->font,Vector_Get(&e->t,0),s->name.Memory,s->name.size,*x,*y);
